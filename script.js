@@ -192,4 +192,63 @@ document.addEventListener('DOMContentLoaded', () => {
         init();
         animate();
     }
+
+    // 8. Cursor Glow Movement
+    const glow = document.getElementById('cursor-glow');
+    let mouseX = 0;
+    let mouseY = 0;
+    let glowX = 0;
+    let glowY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    let lastX = 0;
+    let lastY = 0;
+
+    function createGlitter(x, y) {
+        const particle = document.createElement('div');
+        particle.className = 'glitter-particle';
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        
+        // Randomize size and animation duration slightly for "glitter" effect
+        const size = Math.random() * 3 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        document.body.appendChild(particle);
+        
+        // Remove element after animation
+        setTimeout(() => {
+            particle.remove();
+        }, 600);
+    }
+
+    function moveGlow() {
+        // Smoothly follow the mouse with easing
+        let dx = mouseX - glowX;
+        let dy = mouseY - glowY;
+        
+        glowX += dx * 0.15; // Faster follow for small ball
+        glowY += dy * 0.15;
+        
+        if (glow) {
+            glow.style.left = `${glowX}px`;
+            glow.style.top = `${glowY}px`;
+        }
+
+        // Create glitters if mouse has moved significantly
+        const dist = Math.sqrt(Math.pow(glowX - lastX, 2) + Math.pow(glowY - lastY, 2));
+        if (dist > 5) {
+            createGlitter(glowX, glowY);
+            lastX = glowX;
+            lastY = glowY;
+        }
+        
+        requestAnimationFrame(moveGlow);
+    }
+    moveGlow();
 });
