@@ -1,72 +1,266 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Navbar Scroll Effect
-    const nav = document.getElementById('main-nav');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
+    /* 1. Theme Toggle Logic */
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const html = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
     });
 
-    // 2. Mobile Menu Toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const navMenu = document.getElementById('nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('open');
-        const icon = menuToggle.querySelector('i');
-        if (navMenu.classList.contains('open')) {
-            icon.classList.remove('ph-list');
-            icon.classList.add('ph-x');
+    function updateThemeIcon(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'ph ph-moon-stars';
         } else {
-            icon.classList.remove('ph-x');
-            icon.classList.add('ph-list');
+            themeIcon.className = 'ph ph-sun';
         }
+    }
+
+    /* 2. Custom Cursor Logic */
+    const cursor = document.getElementById('custom-cursor');
+    const follower = document.getElementById('cursor-follower');
+    let mouseX = 0, mouseY = 0;
+    let ballX = 0, ballY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Instant cursor move
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
     });
 
-    // Close menu when link is clicked
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('open');
-            const icon = menuToggle.querySelector('i');
-            icon.classList.remove('ph-x');
-            icon.classList.add('ph-list');
+    // Lagging follower
+    function animateCursor() {
+        let distX = mouseX - ballX;
+        let distY = mouseY - ballY;
+
+        ballX = ballX + (distX * 0.1);
+        ballY = ballY + (distY * 0.1);
+
+        follower.style.left = ballX + 'px';
+        follower.style.top = ballY + 'px';
+
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Hover effect for links/buttons
+    const hoverables = document.querySelectorAll('a, button, .tilt');
+    hoverables.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            follower.style.borderColor = 'var(--accent)';
+        });
+        item.addEventListener('mouseleave', () => {
+            follower.style.transform = 'translate(-50%, -50%) scale(1)';
+            follower.style.borderColor = 'var(--primary)';
         });
     });
 
-    // 3. Reveal Animations on Scroll
-    const reveals = document.querySelectorAll('.reveal, section, .skill-card, .project-card, .contact-card, .achievement-card');
-    
-    const revealOnScrollCallback = (entries, observer) => {
+    /* 3. Scroll Progress Bar */
+    window.addEventListener('scroll', () => {
+        const scrollProgress = document.getElementById('scroll-progress');
+        const totalHeight = document.body.scrollHeight - window.innerHeight;
+        const progress = (window.pageYOffset / totalHeight) * 100;
+        scrollProgress.style.width = progress + '%';
+    });
+
+    /* 4. Typewriter Effect */
+    const typewriterElement = document.getElementById('typewriter');
+    const phrases = [
+        "Creative Developer",
+        "I build modern web applications",
+        "Exploring AI & Data Science"
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function type() {
+        const currentPhrase = phrases[phraseIndex];
+        
+        if (isDeleting) {
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            typeSpeed = 50;
+        } else {
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            typeSpeed = 100;
+        }
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            isDeleting = true;
+            typeSpeed = 1500;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(type, typeSpeed);
+    }
+    type();
+
+    /* 5. Particle System */
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const count = 60;
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2 + 1
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--primary');
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(drawParticles);
+        }
+
+        initParticles();
+        drawParticles();
+        window.addEventListener('resize', initParticles);
+    }
+
+    /* 6. Intersection Observer (Reveal & Progress Bars) */
+    const observerOptions = { threshold: 0.2 };
+    const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                // Optional: stop observing once revealed
-                // observer.unobserve(entry.target);
+                
+                // If it's a progress bar, animate it
+                const bar = entry.target.querySelector('.progress-bar');
+                if (bar) {
+                    bar.style.width = bar.getAttribute('data-width');
+                }
             }
         });
-    };
+    }, observerOptions);
 
-    const revealObserver = new IntersectionObserver(revealOnScrollCallback, {
-        threshold: 0.15
+    document.querySelectorAll('.reveal, .skill-item').forEach(el => revealObserver.observe(el));
+
+    /* 7. 3D Tilt Effect */
+    const cards = document.querySelectorAll('.tilt');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
     });
 
-    reveals.forEach(reveal => {
-        reveal.classList.add('reveal');
-        revealObserver.observe(reveal);
+    /* 8. Magnetic Buttons */
+    const magneticBtns = document.querySelectorAll('.magnetic');
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = `translate(0px, 0px)`;
+        });
     });
 
-    // 4. Active Link Highlighting
+    /* 9. Modal Logic */
+    const projectCards = document.querySelectorAll('.project-card');
+    const modals = document.querySelectorAll('.modal');
+    const closeBtns = document.querySelectorAll('.close-modal');
+
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const modalId = card.getAttribute('data-modal');
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const modal = btn.closest('.modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            e.target.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    /* 10. Sticky Navbar Blur & Active Link */
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section');
-    
+
     window.addEventListener('scroll', () => {
+        // Sticky effect
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        // Active link tracking
         let current = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
-            if (pageYOffset >= sectionTop - 150) {
+            if (pageYOffset >= sectionTop - 200) {
                 current = section.getAttribute('id');
             }
         });
@@ -79,176 +273,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Typewriter Effect
-    const typewriterElement = document.getElementById('typewriter');
-    const words = ["Web Developer", "AI & DS Student", "Future Engineer"];
-    let wordIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typeSpeed = 100;
+    /* 11. Mobile Menu Toggle */
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
 
-    function type() {
-        const currentWord = words[wordIndex];
-        
-        if (isDeleting) {
-            typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
-            charIndex--;
-            typeSpeed = 50;
-        } else {
-            typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
-            charIndex++;
-            typeSpeed = 100;
-        }
-
-        if (!isDeleting && charIndex === currentWord.length) {
-            isDeleting = true;
-            typeSpeed = 2000; // Pause at end of word
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            wordIndex = (wordIndex + 1) % words.length;
-            typeSpeed = 500;
-        }
-
-        setTimeout(type, typeSpeed);
-    }
-
-    type();
-
-    // 6. Back to Top Button
-    const backToTopBtn = document.getElementById('back-to-top');
-    
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.classList.add('show');
-        } else {
-            backToTopBtn.classList.remove('show');
-        }
-    });
-
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('ph-list');
+            icon.classList.toggle('ph-x');
         });
+
+        // Close menu on link click
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('open');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('ph-list');
+                icon.classList.remove('ph-x');
+            });
+        });
+    }
+
+    /* 12. Parallax Effect */
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallaxBg = document.querySelector('.bg-gradient-container');
+        if (parallaxBg) {
+            parallaxBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+        }
     });
 
-    // 7. Particle Background
-    const canvas = document.getElementById('particle-canvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particlesArray = [];
-        const numberOfParticles = 80;
-        
-        const mouse = { x: null, y: null, radius: 150 };
-        window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; });
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); });
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() * 1 - 0.5) * 0.5;
-                this.speedY = (Math.random() * 1 - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.1;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0; else if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0; else if (this.y < 0) this.y = canvas.height;
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    const force = (mouse.radius - distance) / mouse.radius;
-                    this.x -= dx * force * 0.02;
-                    this.y -= dy * force * 0.02;
-                }
-            }
-            draw() {
-                ctx.fillStyle = `rgba(0, 210, 255, ${this.opacity})`;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = '#00d2ff';
-                ctx.beginPath();ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-        }
-        function init() {
-            particlesArray = [];
-            for (let i = 0; i < numberOfParticles; i++) { particlesArray.push(new Particle()); }
-        }
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            requestAnimationFrame(animate);
-        }
-        init();
-        animate();
+    /* 13. Contact Form Handling */
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span>Sending...</span> <i class="ph ph-circle-notch animate-spin"></i>';
+            btn.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span>Message Sent!</span> <i class="ph ph-check-circle"></i>';
+                btn.classList.add('success');
+                contactForm.reset();
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('success');
+                    btn.style.pointerEvents = 'all';
+                }, 3000);
+            }, 1500);
+        });
     }
-
-    // 8. Cursor Glow Movement
-    const glow = document.getElementById('cursor-glow');
-    let mouseX = 0;
-    let mouseY = 0;
-    let glowX = 0;
-    let glowY = 0;
-
-    window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    let lastX = 0;
-    let lastY = 0;
-
-    function createGlitter(x, y) {
-        const particle = document.createElement('div');
-        particle.className = 'glitter-particle';
-        particle.style.left = `${x}px`;
-        particle.style.top = `${y}px`;
-        
-        // Randomize size and animation duration slightly for "glitter" effect
-        const size = Math.random() * 3 + 2;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        
-        document.body.appendChild(particle);
-        
-        // Remove element after animation
-        setTimeout(() => {
-            particle.remove();
-        }, 600);
-    }
-
-    function moveGlow() {
-        // Smoothly follow the mouse with easing
-        let dx = mouseX - glowX;
-        let dy = mouseY - glowY;
-        
-        glowX += dx * 0.15; // Faster follow for small ball
-        glowY += dy * 0.15;
-        
-        if (glow) {
-            glow.style.left = `${glowX}px`;
-            glow.style.top = `${glowY}px`;
-        }
-
-        // Create glitters if mouse has moved significantly
-        const dist = Math.sqrt(Math.pow(glowX - lastX, 2) + Math.pow(glowY - lastY, 2));
-        if (dist > 5) {
-            createGlitter(glowX, glowY);
-            lastX = glowX;
-            lastY = glowY;
-        }
-        
-        requestAnimationFrame(moveGlow);
-    }
-    moveGlow();
 });

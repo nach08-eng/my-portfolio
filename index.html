@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S. Nachammai | Web Developer & AI/DS Student</title>
-    <meta name="description" content="Portfolio of S. Nachammai, a B.Tech AI & Data Science student and passionate Web Developer based in Pudukkottai.">
-    <meta name="keywords" content="S. Nachammai, Web Developer, AI Student, Data Science, Portfolio, CCET">
+    <title>S. Nachammai | Premium Portfolio</title>
+    <meta name="description" content="Portfolio of S. Nachammai, a Creative Developer specializing in modern web applications.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,383 +18,346 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Cursor Glow -->
-    <div class="cursor-glow" id="cursor-glow"></div>
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
 
-    <!-- Background Canvas -->
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Background Layers -->
+    <div class="bg-gradient-container"></div>
     <canvas id="particle-canvas"></canvas>
 
     <!-- Navigation -->
-    <nav id="main-nav">
+    <nav id="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">SN<span>.</span></a>
             <div class="nav-links" id="nav-menu">
-                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#home" class="nav-link active">Home</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#projects" class="nav-link">Projects</a>
-                <a href="#ongoing" class="nav-link">Ongoing</a>
-                <a href="#achievements" class="nav-link">Achievements</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
-                <i class="ph ph-list"></i>
-            </button>
+            <div class="nav-actions">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="ph ph-moon-stars" id="theme-icon"></i>
+                </button>
+                <button id="menu-toggle" class="mobile-only">
+                    <i class="ph ph-list"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section">
-        <div class="container hero-container">
-            <div class="hero-content">
-                <span class="badge">Welcome to my Portfolio</span>
-                <h1 class="hero-title">I'm <span>S. Nachammai</span></h1>
-                <h2 class="hero-subtitle">I am a <span id="typewriter"></span><span class="cursor">|</span></h2>
-                <p class="hero-tagline">Focused on continuous learning and building innovative solutions.</p>
-                <div class="hero-btns">
-                    <a href="#projects" class="btn btn-primary">View Projects</a>
-                    <a href="#contact" class="btn btn-secondary">Get in touch</a>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="badge fade-in">Creative Developer</div>
+                    <h1 class="hero-title">
+                        Hi, I'm <span class="gradient-text">S. Nachammai</span>
+                    </h1>
+                    <h2 class="typewriter-container">
+                        <span id="typewriter"></span><span class="cursor">|</span>
+                    </h2>
+                    <p class="hero-description fade-in">
+                        I build modern web applications with a focus on immersive user experiences and cutting-edge design.
+                    </p>
+                    <div class="hero-actions fade-in">
+                        <a href="resume.pdf" download class="btn btn-primary magnetic">
+                            <span>Download Resume</span>
+                            <i class="ph ph-download-simple"></i>
+                        </a>
+                        <a href="#projects" class="btn btn-secondary magnetic">
+                            <span>View Projects</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual fade-in">
+                    <div class="img-wrapper floating">
+                        <img src="profile.jpeg" alt="S. Nachammai Profile" class="profile-img">
+                        <div class="glow-orb"></div>
+                    </div>
                 </div>
             </div>
-            <div class="hero-image-wrapper">
-                <div class="hero-shape"></div>
-                <div class="image-orb"></div>
-                <!-- Generated profile illustration -->
-                <div class="hero-img-container">
-                    <img src="profile.jpeg" alt="S. Nachammai Profile" class="hero-profile-img">
-                </div>
+            <div class="scroll-down">
+                <a href="#about"><i class="ph ph-mouse-simple"></i></a>
             </div>
+        </section>
+
+        <!-- Wave Divider -->
+        <div class="section-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
         </div>
-        <div class="scroll-indicator">
-            <a href="#about">
-                <div class="mouse">
-                    <div class="wheel"></div>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-header center reveal">
+                    <span class="subtitle">My Story</span>
+                    <h2 class="title">Professional Background</h2>
                 </div>
-                <span>Scroll</span>
-            </a>
+                <div class="about-content grid-2">
+                    <div class="about-text reveal">
+                        <p>I am a passionate 2nd-year B.Tech Information Technology student at Chendhuran College of Engineering and Technology, Pudukkottai. My journey into development is driven by a deep curiosity for how digital products are built and a commitment to excellence.</p>
+                        <p>Specializing in <strong>Artificial Intelligence and Data Science</strong>, I bridge the gap between complex data and intuitive user interfaces. I love tackling challenging problems and turning ideas into polished, high-performance web applications.</p>
+                    </div>
+                    <div class="about-stats reveal">
+                        <div class="stat-card glass-card magnetic">
+                            <i class="ph ph-briefcase"></i>
+                            <h3>Academic</h3>
+                            <p>Information Technology</p>
+                        </div>
+                        <div class="stat-card glass-card magnetic">
+                            <i class="ph ph-rocket-launch"></i>
+                            <h3>Innovation</h3>
+                            <p>Focused on AI/DS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="subtitle">Expertise</span>
+                    <h2 class="title">Technical Skillset</h2>
+                </div>
+                <div class="skills-grid reveal">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>HTML5 & Semantic Markup</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-bar" data-width="95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>CSS3 & Modern Styling</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-bar" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>JavaScript (ES6+)</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-bar" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>AI & Data Science Tools</span>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-bar" data-width="80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="subtitle">Experience</span>
+                    <h2 class="title">Recent Projects</h2>
+                </div>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <article class="project-card glass-card reveal tilt" data-modal="modal1">
+                        <div class="card-inner">
+                            <div class="project-img-container">
+                                <img src="project1.png" alt="Question Bank" onerror="this.src='https://placehold.co/600x400?text=Question+Bank'">
+                                <div class="project-badge">Featured</div>
+                            </div>
+                            <div class="project-content">
+                                <h3>Question Bank</h3>
+                                <p>A sophisticated platform for managing academic question resources and student materials.</p>
+                                <div class="project-tags">
+                                    <span>Academic</span>
+                                    <span>Dashboard</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-primary">Live Demo</button>
+                                    <button class="btn btn-sm btn-ghost">GitHub</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="project-card glass-card reveal tilt" data-modal="modal2">
+                        <div class="card-inner">
+                            <div class="project-img-container">
+                                <img src="project2.png" alt="Digital Dynamo Hub" onerror="this.src='https://placehold.co/600x400?text=Digital+Dynamo+Hub'">
+                                <div class="project-badge">Creative</div>
+                            </div>
+                            <div class="project-content">
+                                <h3>Digital Dynamo Hub</h3>
+                                <p>A modern digital repository designed for high-performance productivity and academic sharing.</p>
+                                <div class="project-tags">
+                                    <span>Productivity</span>
+                                    <span>Hub</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-primary">Live Demo</button>
+                                    <button class="btn btn-sm btn-ghost">GitHub</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="project-card glass-card reveal tilt" data-modal="modal3">
+                        <div class="card-inner">
+                            <div class="project-img-container">
+                                <div class="placeholder-icon">
+                                    <i class="ph ph-check-square"></i>
+                                </div>
+                                <div class="project-badge">New</div>
+                            </div>
+                            <div class="project-content">
+                                <h3>To-Do with Email</h3>
+                                <p>Productivity-focused task manager with automated email reminders and smart categorization.</p>
+                                <div class="project-tags">
+                                    <span>Management</span>
+                                    <span>Automation</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-primary">Live Demo</button>
+                                    <button class="btn btn-sm btn-ghost">GitHub</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wave Divider Bottom -->
+        <div class="section-divider invert">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+            </svg>
         </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about" class="section about-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">A Bit About Me</span>
-                <h2 class="section-title">Who I Am</h2>
-            </div>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>I am <strong>S. Nachammai</strong>, a 2nd-year B.Tech student specializing in <strong>Artificial Intelligence and Data Science</strong> at Chendhuran College of Engineering and Technology, Pudukkottai.</p>
-                    <p>I am a passionate web developer and a continuous learner who enjoys building innovative and practical solutions. My goal is to achieve excellence in my field by constantly improving my skills and working on impactful projects.</p>
-                    <div class="about-stats">
-                        <div class="stat-item">
-                            <span class="stat-number">2nd</span>
-                            <span class="stat-label">Year B.Tech</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">3+</span>
-                            <span class="stat-label">Projects</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">AI/DS</span>
-                            <span class="stat-label">Specialization</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-visual">
-                    <div class="visual-box">
-                        <i class="ph ph-code"></i>
-                        <h3>Development</h3>
-                    </div>
-                    <div class="visual-box middle">
-                        <i class="ph ph-brain"></i>
-                        <h3>Artificial Intelligence</h3>
-                    </div>
-                    <div class="visual-box">
-                        <i class="ph ph-database"></i>
-                        <h3>Data Science</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section skills-section">
-        <div class="container">
-            <div class="section-header center">
-                <span class="section-subtitle">Expertise</span>
-                <h2 class="section-title">My Technical Skills</h2>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="ph ph-file-js"></i></div>
-                    <h3>JavaScript</h3>
-                    <p>Building interactive frontend experiences and logic.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="ph ph-database"></i></div>
-                    <h3>SQL & MySQL</h3>
-                    <p>Managing relational databases and complex queries.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="ph ph-leaf"></i></div>
-                    <h3>MongoDB</h3>
-                    <p>Working with NoSQL databases for scalable apps.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="ph ph-robot"></i></div>
-                    <h3>AI Tools</h3>
-                    <p>Leveraging modern AI platforms to enhance development.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="ph ph-layout"></i></div>
-                    <h3>Web Development</h3>
-                    <p>End-to-end website creation and responsive design.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section projects-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Portfolio</span>
-                <h2 class="section-title">Featured Projects</h2>
-            </div>
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <article class="project-card reveal">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <a href="https://nach08-eng.github.io/CCET-Question-Bank" target="_blank" class="project-link">View Demo <i class="ph ph-arrow-square-out"></i></a>
-                        </div>
-                        <img src="project1.png" alt="StudyHub Question Bank" class="project-img-full">
-                    </div>
-                    <div class="project-info">
-                        <h3>StudyHub</h3>
-                        <p>A comprehensive student-focused platform for accessing college question banks and study resources.</p>
-                        <div class="project-tags">
-                            <span>Education</span>
-                            <span>Web App</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 2 -->
-                <article class="project-card reveal">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <a href="https://digital-dynamo-hub-ddh.lovable.app/" target="_blank" class="project-link">View Demo <i class="ph ph-arrow-square-out"></i></a>
-                        </div>
-                        <img src="project2.png" alt="Digital Dynamo Hub" class="project-img-full">
-                    </div>
-                    <div class="project-info">
-                        <h3>Digital Dynamo Hub</h3>
-                        <p>A modern digital repository and sharing platform for academic excellence.</p>
-                        <div class="project-tags">
-                            <span>Repository</span>
-                            <span>Platform</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 3 (Moved To-Do List here) -->
-                <article class="project-card reveal">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <span class="project-status">Completed</span>
-                        </div>
-                        <div class="project-placeholder">
-                            <i class="ph ph-check-square"></i>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>To-Do List with Email Integration</h3>
-                        <p>A productivity app with task management and email notification features.</p>
-                        <div class="project-tags">
-                            <span>Productivity</span>
-                            <span>Automation</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Ongoing Projects Section -->
-    <section id="ongoing" class="section ongoing-section">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-subtitle">Future Innovation</span>
-                <h2 class="section-title">Ongoing Projects</h2>
-            </div>
-            <div class="ongoing-card reveal">
-                <div class="ongoing-visual">
-                    <img src="ongoing.png" alt="AI Study Planner Screenshot" class="ongoing-img">
-                </div>
-                <div class="ongoing-content">
-                    <span class="ongoing-badge">In Development</span>
-                    <h3>AI Study Planner & Career Guidance</h3>
-                    <p>An intelligent platform providing personalized study schedules and career roadmap based on student goals. Built with modern AI APIs to adapt to individual learning speeds.</p>
-                    <div class="project-tags">
-                        <span>AI</span>
-                        <span>Guidance</span>
-                        <span>Machine Learning</span>
-                    </div>
-                    <a href="#" class="btn btn-primary btn-sm ongoing-btn">Explore Project <i class="ph ph-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Achievements Section -->
-    <section id="achievements" class="section achievements-section">
-        <div class="container">
-            <div class="section-header center">
-                <span class="section-subtitle">Milestones</span>
-                <h2 class="section-title">My Achievements</h2>
-            </div>
-            <div class="achievements-grid">
-                <div class="achievement-card reveal">
-                    <div class="achievement-icon"><i class="ph ph-handshake"></i></div>
-                    <div class="achievement-info">
-                        <h3>Symposiums</h3>
-                        <p>Participated in inter and other college symposiums, showcasing technical skills and networking with peers.</p>
-                    </div>
-                </div>
-                <div class="achievement-card reveal">
-                    <div class="achievement-icon"><i class="ph ph-terminal-window"></i></div>
-                    <div class="achievement-info">
-                        <h3>Inter-college Hackathon</h3>
-                        <p>Participated in various Inter-college Hackathons, solving real-world problems under time constraints.</p>
-                    </div>
-                </div>
-                <div class="achievement-card highlight reveal">
-                    <div class="achievement-icon"><i class="ph ph-trophy"></i></div>
-                    <div class="achievement-info">
-                        <h3>Mini Project Expo 2026</h3>
-                        <p>Won <strong>2nd Prize</strong> for demonstrating innovative technical solutions and project execution.</p>
-                    </div>
-                </div>
-                <div class="achievement-card highlight reveal">
-                    <div class="achievement-icon"><i class="ph ph-rocket-launch"></i></div>
-                    <div class="achievement-info">
-                        <h3>Techelite'26</h3>
-                        <p>Participated in the National level technical hackathon, gained exposure to advanced technologies and innovative problem-solving approaches.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <span class="section-subtitle">Get in Touch</span>
-                    <h2 class="section-title">Let's Work Together</h2>
-                    <p>I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.</p>
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container contact-grid-main">
+                <div class="contact-info reveal">
+                    <span class="subtitle">Get in Touch</span>
+                    <h2 class="title">Let's build something together.</h2>
+                    <p>Currently open for internship opportunities, collaborations, and freelance projects. I'm always looking for innovative teams to grow with.</p>
                     
-                    <div class="contact-methods">
-                        <a href="mailto:nachammaisubbu@gmail.com" class="contact-card">
+                    <div class="contact-list">
+                        <div class="contact-card magnetic">
+                            <i class="ph ph-phone"></i>
+                            <div>
+                                <span>Phone</span>
+                                <p>9876544310</p>
+                            </div>
+                        </div>
+                        <div class="contact-card magnetic">
                             <i class="ph ph-envelope-simple"></i>
                             <div>
-                                <span>Email Me</span>
-                                <strong>nachammaisubbu2006@gmail.com</strong>
+                                <span>Email</span>
+                                <p>qwerty@gmail.com</p>
                             </div>
-                        </a>
-                        <a href="https://www.linkedin.com/in/nachammai-s-2983a1328/" target="_blank" class="contact-card">
-                            <i class="ph ph-linkedin-logo"></i>
-                            <div>
-                                <span>LinkedIn</span>
-                                <strong>S. Nachammai Profile</strong>
-                            </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
-                <div class="contact-visual">
-                    <div class="cta-box">
-                        <h3>Ready to start a project?</h3>
-                        <p>Currently open for internship and project opportunities.</p>
-                        <a href="mailto:nachammaisubbu2006@gmail.com" class="btn btn-primary">Send a Message</a>
-                    </div>
+                <div class="contact-form-wrapper reveal glass-card">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Your idea starts here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary magnetic w-full">
+                            <span>Send Message</span>
+                            <i class="ph ph-paper-plane-tilt"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Footer -->
     <footer>
-        <div class="container footer-content">
-            <div class="footer-brand">
-                <a href="#" class="logo">SN<span>.</span></a>
-                <p> Built with passion.</p>
-            </div>
-            <div class="footer-links">
-                <a href="#hero">Home</a>
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <div class="footer-social">
-                <a href="https://www.linkedin.com/in/nachammai-s-2983a1328/" target="_blank"><i class="ph ph-linkedin-logo"></i></a>
-                <a href="mailto:nachammaisubbu2006@gmail.com"><i class="ph ph-envelope"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <p>&copy; 2026 S. Nachammai. All rights reserved.</p>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 S. Nachammai. Hand-crafted with passion.</p>
+            <div class="footer-socials">
+                <a href="#" class="magnetic"><i class="ph ph-linkedin-logo"></i></a>
+                <a href="#" class="magnetic"><i class="ph ph-github-logo"></i></a>
+                <a href="#" class="magnetic"><i class="ph ph-twitter-logo"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top -->
-    <button id="back-to-top" title="Go to top">
-        <i class="ph ph-arrow-up"></i>
-    </button>
+    <!-- Modals -->
+    <div id="modal1" class="modal">
+        <div class="modal-content glass-card">
+            <button class="close-modal"><i class="ph ph-x"></i></button>
+            <h3>Question Bank</h3>
+            <img src="project1.png" alt="Question Bank" class="modal-img" onerror="this.src='https://placehold.co/600x400?text=Question+Bank'">
+            <p>Managed academic resources with a robust dashboard for students and educators. Features include category filtering, PDF management, and search functionality.</p>
+            <div class="tech-stack">
+                <span>HTML</span> <span>CSS</span> <span>JavaScript</span> <span>Node.js</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content glass-card">
+            <button class="close-modal"><i class="ph ph-x"></i></button>
+            <h3>Digital Dynamo Hub</h3>
+            <img src="project2.png" alt="Digital Dynamo Hub" class="modal-img" onerror="this.src='https://placehold.co/600x400?text=Digital+Dynamo+Hub'">
+            <p>A high-performance digital repository for academic excellence. It enables seamless productivity tracking and workflow automation for students and teams.</p>
+            <div class="tech-stack">
+                <span>React</span> <span>Vanilla JS</span> <span>CSS Grid</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content glass-card">
+            <button class="close-modal"><i class="ph ph-x"></i></button>
+            <h3>To-Do List with Email Integration</h3>
+            <div class="modal-img placeholder-icon" style="height: 200px">
+                <i class="ph ph-check-square"></i>
+            </div>
+            <p>A smart productivity app that sends email alerts for task deadlines and provides a clean, user-friendly interface for managing complex schedules.</p>
+            <div class="tech-stack">
+                <span>JavaScript</span> <span>Node Mailer</span> <span>Local Storage</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="script.js"></script>
-
-    <script>
-            // Disable right-click
-                document.addEventListener('contextmenu', function(e) {
-                 e.preventDefault();
-                });
-
-            // Disable right-click with an alert
-                document.addEventListener('contextmenu', function(e) {
-                 alert("Sorry, right click is disabled!");
-                e.preventDefault();
-            });
-
-            // Disable specific keyboard shortcuts
-            document.onkeydown = function(e) {
-            if (e.keyCode == 123) { // Disable F12
-            return false;
-           }
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Disable Ctrl+Shift+I
-            return false;
-            }
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { // Disable Ctrl+Shift+C
-            return false;
-            }
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Disable Ctrl+Shift+J
-            return false;
-            }
-            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Disable Ctrl+U
-            return false;
-            }
-            if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { // Disable Ctrl+S
-            return false;
-            }
-            };
-
-        </script>
-
-        
 </body>
 </html>
