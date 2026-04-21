@@ -306,27 +306,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* 13. Contact Form Handling */
+       /* 13. Contact Form Handling (Integrated with Formspree) */
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = contactForm.querySelector('button');
             const originalText = btn.innerHTML;
             
+            // Show Loading State
             btn.innerHTML = '<span>Sending...</span> <i class="ph ph-circle-notch animate-spin"></i>';
             btn.style.pointerEvents = 'none';
-            
-            setTimeout(() => {
-                btn.innerHTML = '<span>Message Sent!</span> <i class="ph ph-check-circle"></i>';
-                btn.classList.add('success');
-                contactForm.reset();
+
+            const formData = new FormData(contactForm);
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Success State
+                    btn.innerHTML = '<span>Message Sent!</span> <i class="ph ph-check-circle"></i>';
+                    btn.classList.add('success');
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.classList.remove('success');
+                        btn.style.pointerEvents = 'all';
+                    }, 3000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                // Error State
+                btn.innerHTML = '<span>Error! Try again.</span> <i class="ph ph-warning-circle"></i>';
+                btn.style.background = '#ef4444';
                 
                 setTimeout(() => {
                     btn.innerHTML = originalText;
-                    btn.classList.remove('success');
+                    btn.style.background = '';
                     btn.style.pointerEvents = 'all';
                 }, 3000);
-            }, 1500);
+            }
         });
     }
+
 });
