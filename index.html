@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S. Nachammai | Creative Portfolio</title>
-    <meta name="description" content="Innovative Personal Portfolio of S. Nachammai - Creative Developer specializing in modern web experiences.">
+    <title>S. Nachammai | Premium Portfolio</title>
+    <meta name="description" content="Portfolio of S. Nachammai, a Creative Developer specializing in modern web applications.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -18,220 +18,344 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Preloader -->
-    <div id="loader">
-        <div class="loader-content">
-            <div class="loader-circle"></div>
-            <div class="loader-text">Loading Excellence <span id="load-count">0</span>%</div>
-        </div>
-    </div>
-
-    <!-- Background Components -->
-    <div class="background-layers">
-        <canvas id="particle-canvas"></canvas>
-        <div class="blob-container">
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
-        </div>
-        <div class="bg-noise"></div>
-    </div>
-
-    <!-- Scroll Progress -->
-    <div id="progress-bar"></div>
-
     <!-- Custom Cursor -->
-    <div id="cursor-glow"></div>
-    <div id="cursor-trail"></div>
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Background Layers -->
+    <div class="bg-gradient-container"></div>
+    <canvas id="particle-canvas"></canvas>
 
     <!-- Navigation -->
     <nav id="navbar">
-        <div class="nav-pill">
-            <a href="#hero" class="nav-item active" data-tooltip="Home"><i class="ph ph-house"></i></a>
-            <a href="#about" class="nav-item" data-tooltip="About"><i class="ph ph-user"></i></a>
-            <a href="#projects" class="nav-item" data-tooltip="Projects"><i class="ph ph-grid-four"></i></a>
-            <a href="#contact" class="nav-item" data-tooltip="Contact"><i class="ph ph-envelope"></i></a>
-            <button id="theme-toggle" class="nav-item"><i class="ph ph-moon"></i></button>
+        <div class="container nav-container">
+            <a href="#" class="logo">SN<span>.</span></a>
+            <div class="nav-links" id="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="ph ph-moon-stars" id="theme-icon"></i>
+                </button>
+                <button id="menu-toggle" class="mobile-only">
+                    <i class="ph ph-list"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- Main Bento Grid -->
-    <main class="container">
-        <div class="bento-grid">
-            <!-- Hero Card -->
-            <section id="hero" class="bento-item hero-card span-2-2 reveal">
-                <div class="glass-content hero-inner">
-                    <div class="hero-text">
-                        <span class="badge">Open for Collaboration</span>
-                        <h1 class="hero-name">S. Nachammai</h1>
-                        <h2 class="typewriter-container">
-                            <span id="typewriter"></span><span class="cursor">|</span>
-                        </h2>
-                        <p>I build modern web applications that bridge the gap between complex data and intuitive user experiences.</p>
-                        <div class="hero-btns">
-                            <a href="#" class="btn btn-primary magnetic">
-                                <span>Download CV</span>
-                                <i class="ph ph-download-simple"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="hero-image-box">
-                        <div class="profile-orb floating">
-                            <img src="profile.jpeg" alt="S. Nachammai" class="profile-img">
-                            <div class="orb-glow"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-shine"></div>
-            </section>
-
-            <!-- About Card -->
-            <section id="about" class="bento-item about-card span-2 reveal">
-                <div class="glass-content">
-                    <h3 class="section-title">Who I Am</h3>
-                    <p>A passionate 2nd-year Information Technology student dedicated to crafting digital excellence. I specialize in Artificial Intelligence and Data Science, bringing a unique perspective to every line of code I write.</p>
-                    <div class="about-tags">
-                        <span>Problem Solver</span>
-                        <span>UI Enthusiast</span>
-                        <span>AI/DS Student</span>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="badge fade-in">Creative Developer</div>
+                    <h1 class="hero-title">
+                        Hi, I'm <span class="gradient-text">S. Nachammai</span>
+                    </h1>
+                    <h2 class="typewriter-container">
+                        <span id="typewriter"></span><span class="cursor">|</span>
+                    </h2>
+                    <p class="hero-description fade-in">
+                        I build modern web applications with a focus on immersive user experiences and cutting-edge design.
+                    </p>
+                    <div class="hero-actions fade-in">
+                        <a href="resume.pdf" download class="btn btn-primary magnetic">
+                            <span>Download Resume</span>
+                            <i class="ph ph-download-simple"></i>
+                        </a>
+                        <a href="#projects" class="btn btn-secondary magnetic">
+                            <span>View Projects</span>
+                        </a>
                     </div>
                 </div>
-                <div class="glass-shine"></div>
-            </section>
-
-            <!-- Skills Card -->
-            <section class="bento-item skills-card span-1-2 reveal">
-                <div class="glass-content">
-                    <h3 class="section-title">Technical Expertise</h3>
-                    <div class="skill-list">
-                        <div class="skill-group">
-                            <div class="skill-info"><span>HTML/CSS</span><span>95%</span></div>
-                            <div class="prog-bg"><div class="prog-fill" data-width="95%"></div></div>
-                        </div>
-                        <div class="skill-group">
-                            <div class="skill-info"><span>JavaScript</span><span>90%</span></div>
-                            <div class="prog-bg"><div class="prog-fill" data-width="90%"></div></div>
-                        </div>
-                        <div class="skill-group">
-                            <div class="skill-info"><span>AI Tools</span><span>85%</span></div>
-                            <div class="prog-bg"><div class="prog-fill" data-width="85%"></div></div>
-                        </div>
-                        <div class="skill-group">
-                            <div class="skill-info"><span>Data Science</span><span>80%</span></div>
-                            <div class="prog-bg"><div class="prog-fill" data-width="80%"></div></div>
-                        </div>
+                <div class="hero-visual fade-in">
+                    <div class="img-wrapper floating">
+                        <img src="profile.jpeg" alt="S. Nachammai Profile" class="profile-img">
+                        <div class="glow-orb"></div>
                     </div>
                 </div>
-                <div class="glass-shine"></div>
-            </section>
-
-            <!-- Projects Header Card -->
-            <div id="projects" class="bento-item project-header reveal">
-                <div class="glass-content">
-                    <h3 class="section-title">Featured Works</h3>
-                    <p>Selection of my latest digital experiments and products.</p>
-                </div>
-                <div class="glass-shine"></div>
             </div>
+            <div class="scroll-down">
+                <a href="#about"><i class="ph ph-mouse-simple"></i></a>
+            </div>
+        </section>
 
-            <!-- Project 1 -->
-            <section class="bento-item project-card span-1 reveal tilt" data-modal="modal-1">
-                <div class="glass-content project-inner">
-                    <div class="proj-img-placeholder">
-                        <img src="project1.png" alt="Question Bank" onerror="this.src='https://placehold.co/400x300?text=Question+Bank'">
-                    </div>
-                    <div class="proj-info">
-                        <h4>Question Bank</h4>
-                        <div class="proj-actions">
-                            <button class="btn-icon"><i class="ph ph-arrow-up-right"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-shine"></div>
-            </section>
-
-            <!-- Project 2 -->
-            <section class="bento-item project-card span-1 reveal tilt" data-modal="modal-2">
-                <div class="glass-content project-inner">
-                    <div class="proj-img-placeholder">
-                        <img src="project2.png" alt="Digital Dynamo" onerror="this.src='https://placehold.co/400x300?text=Digital+Dynamo'">
-                    </div>
-                    <div class="proj-info">
-                        <h4>Digital Dynamo Hub</h4>
-                        <div class="proj-actions">
-                            <button class="btn-icon"><i class="ph ph-arrow-up-right"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-shine"></div>
-            </section>
-
-            <!-- Project 3 -->
-            <section class="bento-item project-card span-1 reveal tilt" data-modal="modal-3">
-                <div class="glass-content project-inner">
-                    <div class="proj-img-placeholder">
-                        <div class="placeholder-icon"><i class="ph ph-check-square"></i></div>
-                    </div>
-                    <div class="proj-info">
-                        <h4>Task Automation</h4>
-                        <div class="proj-actions">
-                            <button class="btn-icon"><i class="ph ph-arrow-up-right"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-shine"></div>
-            </section>
-
-            <!-- Contact Card -->
-            <section id="contact" class="bento-item contact-card span-2 reveal">
-                <div class="glass-content">
-                    <h3 class="section-title">Get In Touch</h3>
-                    <div class="contact-grid">
-                        <div class="contact-details">
-                            <div class="c-item"><i class="ph ph-phone"></i> 9442155680</div>
-                            <div class="c-item"><i class="ph ph-envelope"></i> nachammaisubbu2006@gmail.com</div>
-                            <div class="social-icons">
-                                <a href="#" class="magnetic"><i class="ph ph-linkedin-logo"></i></a>
-                                <a href="#" class="magnetic"><i class="ph ph-github-logo"></i></a>
-                            </div>
-                        </div>
-                        <form id="contact-form" action="https://formspree.io/f/nachammaisubbu2006@gmail.com" method="POST">
-                            <div class="form-row">
-                                <input type="text" name="name" placeholder="Your Name" required>
-                                <input type="email" name="email" placeholder="Your Email" required>
-                            </div>
-                            <textarea name="message" placeholder="Describe your project..." required></textarea>
-                            <button type="submit" class="btn btn-primary magnetic">
-                                <span>Send Message</span>
-                                <i class="ph ph-paper-plane-tilt"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <div class="glass-shine"></div>
-            </section>
+        <!-- Wave Divider -->
+        <div class="section-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
         </div>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-header center reveal">
+                    <span class="subtitle">My Story</span>
+                    <h2 class="title">Professional Background</h2>
+                </div>
+                <div class="about-content grid-2">
+                    <div class="about-text reveal">
+                        <p>I am a passionate 2nd-year B.Tech Artificial Intelligence and Data Science student at Chendhuran College of Engineering and Technology, Pudukkottai. My journey into development is driven by a deep curiosity for how digital products are built and a commitment to excellence.</p>
+                        <p>Specializing in <strong>Artificial Intelligence and Data Science</strong>, I love tackling challenging problems and turning ideas into polished, high-performance web applications.</p>
+                    </div>
+                    <div class="about-stats reveal">
+                        <div class="stat-card glass-card magnetic">
+                            <i class="ph ph-briefcase"></i>
+                            <h3>Academic</h3>
+                            <p>Artificial Intelligence and Data Science</p>
+                        </div>
+                        <div class="stat-card glass-card magnetic">
+                            <i class="ph ph-rocket-launch"></i>
+                            <h3>Innovation</h3>
+                            <p>Focused on Webdevelopment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="subtitle">Expertise</span>
+                    <h2 class="title">Technical Skillset</h2>
+                </div>
+                <div class="skills-grid reveal">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>HTML5 & Semantic Markup</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-bar" data-width="95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>CSS3 & Modern Styling</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-bar" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>JavaScript (ES6+)</span>
+                            <span class="skill-percent">25%</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-bar" data-width="25%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>AI & Data Science Tools</span>
+                            <span class="skill-percent">5%</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-bar" data-width="5%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="subtitle">Experience</span>
+                    <h2 class="title">Recent Projects</h2>
+                </div>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <article class="project-card glass-card reveal tilt" data-modal="modal1">
+                        <div class="card-inner">
+                            <div class="project-img-container">
+                                <img src="project1.png" alt="Question Bank" onerror="this.src='https://placehold.co/600x400?text=Question+Bank'">
+                                <div class="project-badge">Featured</div>
+                            </div>
+                            <div class="project-content">
+                                <h3>Question Bank</h3>
+                                <p>A sophisticated platform for managing academic question resources and student materials.</p>
+                                <div class="project-tags">
+                                    <span>Academic</span>
+                                    <span>Dashboard</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-primary">Live Demo</button>
+                                    <button class="btn btn-sm btn-ghost">GitHub</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="project-card glass-card reveal tilt" data-modal="modal2">
+                        <div class="card-inner">
+                            <div class="project-img-container">
+                                <img src="project2.png" alt="Digital Dynamo Hub" onerror="this.src='https://placehold.co/600x400?text=Digital+Dynamo+Hub'">
+                                <div class="project-badge">Creative</div>
+                            </div>
+                            <div class="project-content">
+                                <h3>Digital Dynamo Hub</h3>
+                                <p>A modern digital repository designed for high-performance productivity and academic sharing.</p>
+                                <div class="project-tags">
+                                    <span>Productivity</span>
+                                    <span>Hub</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-primary">Live Demo</button>
+                                    <button class="btn btn-sm btn-ghost">GitHub</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="project-card glass-card reveal tilt" data-modal="modal3">
+                        <div class="card-inner">
+                            <div class="project-img-container">
+                                <div class="placeholder-icon">
+                                    <i class="ph ph-check-square"></i>
+                                </div>
+                                <div class="project-badge">New</div>
+                            </div>
+                            <div class="project-content">
+                                <h3>To-Do with Email</h3>
+                                <p>Productivity-focused task manager with automated email reminders and smart categorization.</p>
+                                <div class="project-tags">
+                                    <span>Management</span>
+                                    <span>Automation</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-primary">Live Demo</button>
+                                    <button class="btn btn-sm btn-ghost">GitHub</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wave Divider Bottom -->
+        <div class="section-divider invert">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+            </svg>
+        </div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container contact-grid-main">
+                <div class="contact-info reveal">
+                    <span class="subtitle">Get in Touch</span>
+                    <h2 class="title">Let's build something together.</h2>
+                    <p>Currently open for internship opportunities, collaborations, and freelance projects. I'm always looking for innovative teams to grow with.</p>
+                    
+                    <div class="contact-list">
+                        <div class="contact-card magnetic">
+                            <i class="ph ph-phone"></i>
+                            <div>
+                                <span>Phone</span>
+                                <p>9442155680</p>
+                            </div>
+                        </div>
+                        <div class="contact-card magnetic">
+                            <i class="ph ph-envelope-simple"></i>
+                            <div>
+                                <span>Email</span>
+                                <p>nachammaisubbu2006@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper reveal glass-card">
+                    <form id="contact-form" action="https://formspree.io/f/nachammaisubbu2006@gmail.com" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Your idea starts here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary magnetic w-full">
+                            <span>Send Message</span>
+                            <i class="ph ph-paper-plane-tilt"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer-minimal">
-        <p>&copy; 2026 S. Nachammai. Build with innovation.</p>
+    <footer>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 S. Nachammai. Hand-crafted with passion.</p>
+            <div class="footer-socials">
+                <a href="#" class="magnetic"><i class="ph ph-linkedin-logo"></i></a>
+                <a href="#" class="magnetic"><i class="ph ph-github-logo"></i></a>
+                <a href="#" class="magnetic"><i class="ph ph-twitter-logo"></i></a>
+            </div>
+        </div>
     </footer>
 
     <!-- Modals -->
-    <div id="modal-1" class="modal">
-        <div class="modal-card blur-card">
-            <button class="modal-close"><i class="ph ph-x"></i></button>
+    <div id="modal1" class="modal">
+        <div class="modal-content glass-card">
+            <button class="close-modal"><i class="ph ph-x"></i></button>
             <h3>Question Bank</h3>
-            <img src="project1.png" alt="Question Bank" class="modal-img">
-            <p>A sophisticated platform for academic resource management, featuring advanced filtering and secure document handling.</p>
-            <div class="modal-actions">
-                <a href="#" class="btn btn-primary btn-sm">Live Demo</a>
-                <a href="#" class="btn btn-secondary btn-sm">GitHub</a>
+            <img src="project1.png" alt="Question Bank" class="modal-img" onerror="this.src='https://placehold.co/600x400?text=Question+Bank'">
+            <p>Managed academic resources with a robust dashboard for students and educators. Features include category filtering, PDF management, and search functionality.</p>
+            <div class="tech-stack">
+                <span>HTML</span> <span>CSS</span> <span>JavaScript</span> <span>Node.js</span>
             </div>
         </div>
     </div>
-    <!-- Modals 2 & 3 similarly -->
+
+    <div id="modal2" class="modal">
+        <div class="modal-content glass-card">
+            <button class="close-modal"><i class="ph ph-x"></i></button>
+            <h3>Digital Dynamo Hub</h3>
+            <img src="project2.png" alt="Digital Dynamo Hub" class="modal-img" onerror="this.src='https://placehold.co/600x400?text=Digital+Dynamo+Hub'">
+            <p>A high-performance digital repository for academic excellence. It enables seamless productivity tracking and workflow automation for students and teams.</p>
+            <div class="tech-stack">
+                <span>React</span> <span>Vanilla JS</span> <span>CSS Grid</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content glass-card">
+            <button class="close-modal"><i class="ph ph-x"></i></button>
+            <h3>To-Do List with Email Integration</h3>
+            <div class="modal-img placeholder-icon" style="height: 200px">
+                <i class="ph ph-check-square"></i>
+            </div>
+            <p>A smart productivity app that sends email alerts for task deadlines and provides a clean, user-friendly interface for managing complex schedules.</p>
+            <div class="tech-stack">
+                <span>JavaScript</span> <span>Node Mailer</span> <span>Local Storage</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="script.js"></script>

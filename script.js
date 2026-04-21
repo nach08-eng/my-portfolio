@@ -1,242 +1,360 @@
 document.addEventListener('DOMContentLoaded', () => {
-    /* 1. Preloader Logic */
-    const loader = document.getElementById('loader');
-    const loadCount = document.getElementById('load-count');
-    let progress = 0;
-
-    const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 10);
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(interval);
-            setTimeout(() => {
-                loader.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }, 500);
-        }
-        loadCount.innerText = progress;
-    }, 50);
-
-    /* 2. Theme Toggle */
-    const themeBtn = document.getElementById('theme-toggle');
+    /* 1. Theme Toggle Logic */
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
     const html = document.documentElement;
-    const themeIcon = themeBtn.querySelector('i');
 
-    const savedTheme = localStorage.getItem('bento-portfolio-theme') || 'dark';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     html.setAttribute('data-theme', savedTheme);
-    updateIcon(savedTheme);
+    updateThemeIcon(savedTheme);
 
-    themeBtn.addEventListener('click', () => {
-        const current = html.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', next);
-        localStorage.setItem('bento-portfolio-theme', next);
-        updateIcon(next);
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
     });
 
-    function updateIcon(theme) {
-        themeIcon.className = theme === 'dark' ? 'ph ph-moon' : 'ph ph-sun';
+    function updateThemeIcon(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'ph ph-moon-stars';
+        } else {
+            themeIcon.className = 'ph ph-sun';
+        }
     }
 
-    /* 3. Custom Cursor & Glow */
-    const cursorGlow = document.getElementById('cursor-glow');
-    const cursorTrail = document.getElementById('cursor-trail');
-    let mX = 0, mY = 0, tX = 0, tY = 0;
+    /* 2. Custom Cursor Logic */
+    const cursor = document.getElementById('custom-cursor');
+    const follower = document.getElementById('cursor-follower');
+    let mouseX = 0, mouseY = 0;
+    let ballX = 0, ballY = 0;
 
-    window.addEventListener('mousemove', (e) => {
-        mX = e.clientX;
-        mY = e.clientY;
-        cursorGlow.style.left = mX + 'px';
-        cursorGlow.style.top = mY + 'px';
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Instant cursor move
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
     });
 
-    function updateTrail() {
-        tX += (mX - tX) * 0.15;
-        tY += (mY - tY) * 0.15;
-        cursorTrail.style.left = tX + 'px';
-        cursorTrail.style.top = tY + 'px';
-        requestAnimationFrame(updateTrail);
+    // Lagging follower
+    function animateCursor() {
+        let distX = mouseX - ballX;
+        let distY = mouseY - ballY;
+
+        ballX = ballX + (distX * 0.1);
+        ballY = ballY + (distY * 0.1);
+
+        follower.style.left = ballX + 'px';
+        follower.style.top = ballY + 'px';
+
+        requestAnimationFrame(animateCursor);
     }
-    updateTrail();
+    animateCursor();
+
+    // Hover effect for links/buttons
+    const hoverables = document.querySelectorAll('a, button, .tilt');
+    hoverables.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            follower.style.borderColor = 'var(--accent)';
+        });
+        item.addEventListener('mouseleave', () => {
+            follower.style.transform = 'translate(-50%, -50%) scale(1)';
+            follower.style.borderColor = 'var(--primary)';
+        });
+    });
+
+    /* 3. Scroll Progress Bar */
+    window.addEventListener('scroll', () => {
+        const scrollProgress = document.getElementById('scroll-progress');
+        const totalHeight = document.body.scrollHeight - window.innerHeight;
+        const progress = (window.pageYOffset / totalHeight) * 100;
+        scrollProgress.style.width = progress + '%';
+    });
 
     /* 4. Typewriter Effect */
-    const typewriter = document.getElementById('typewriter');
-    const words = ["Creative Developer", "Student of AI & DS", "Full Stack Enthusiast"];
-    let wordIdx = 0, charIdx = 0, isDeleting = false;
+    const typewriterElement = document.getElementById('typewriter');
+    const phrases = [
+        "Creative Developer",
+        "I build modern web applications",
+        "Exploring AI & Data Science"
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
 
-    function typeEffect() {
-        const currentWord = words[wordIdx];
+    function type() {
+        const currentPhrase = phrases[phraseIndex];
+        
         if (isDeleting) {
-            typewriter.textContent = currentWord.substring(0, charIdx - 1);
-            charIdx--;
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            typeSpeed = 50;
         } else {
-            typewriter.textContent = currentWord.substring(0, charIdx + 1);
-            charIdx++;
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            typeSpeed = 100;
         }
 
-        let speed = isDeleting ? 50 : 100;
-        if (!isDeleting && charIdx === currentWord.length) {
-            speed = 2000;
+        if (!isDeleting && charIndex === currentPhrase.length) {
             isDeleting = true;
-        } else if (isDeleting && charIdx === 0) {
+            typeSpeed = 1500;
+        } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
-            wordIdx = (wordIdx + 1) % words.length;
-            speed = 500;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 500;
         }
-        setTimeout(typeEffect, speed);
-    }
-    typeEffect();
 
-    /* 5. Intersection Observer (Reveals & Progress) */
+        setTimeout(type, typeSpeed);
+    }
+    type();
+
+    /* 5. Particle System */
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const count = 60;
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2 + 1
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--primary');
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(drawParticles);
+        }
+
+        initParticles();
+        drawParticles();
+        window.addEventListener('resize', initParticles);
+    }
+
+    /* 6. Intersection Observer (Reveal & Progress Bars) */
+    const observerOptions = { threshold: 0.2 };
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                const progressBar = entry.target.querySelector('.prog-fill');
-                if (progressBar) {
-                    progressBar.style.width = progressBar.getAttribute('data-width');
+                
+                // If it's a progress bar, animate it
+                const bar = entry.target.querySelector('.progress-bar');
+                if (bar) {
+                    bar.style.width = bar.getAttribute('data-width');
                 }
             }
         });
-    }, { threshold: 0.15 });
+    }, observerOptions);
 
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('.reveal, .skill-item').forEach(el => revealObserver.observe(el));
 
-    /* 6. 3D Tilt Card Logic */
-    const tiltCards = document.querySelectorAll('.tilt');
-    tiltCards.forEach(card => {
+    /* 7. 3D Tilt Effect */
+    const cards = document.querySelectorAll('.tilt');
+    cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
-            const { left, top, width, height } = card.getBoundingClientRect();
-            const x = (e.clientX - left - width / 2) / 10;
-            const y = (e.clientY - top - height / 2) / 10;
-            card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg) scale3d(1.02, 1.02, 1.02)`;
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
-        });
-    });
-
-    /* 7. Magnetic Buttons */
-    const magneticItems = document.querySelectorAll('.magnetic');
-    magneticItems.forEach(item => {
-        item.addEventListener('mousemove', (e) => {
-            const { left, top, width, height } = item.getBoundingClientRect();
-            const x = (e.clientX - left - width / 2) * 0.3;
-            const y = (e.clientY - top - height / 2) * 0.3;
-            item.style.transform = `translate(${x}px, ${y}px)`;
-        });
-        item.addEventListener('mouseleave', () => {
-            item.style.transform = `translate(0, 0)`;
-        });
-    });
-
-    /* 8. Parallax Background */
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        // Parallax scroll progress
-        const progBar = document.getElementById('progress-bar');
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        progBar.style.width = (scrolled / height) * 100 + '%';
-
-        // Parallax blobs
-        const blobs = document.querySelectorAll('.blob');
-        blobs.forEach((blob, idx) => {
-            const factor = (idx + 1) * 0.2;
-            blob.style.transform = `translateY(${scrolled * factor}px)`;
-        });
-
-        // Navigation active state
-        document.querySelectorAll('section').forEach(section => {
-            const top = section.offsetTop - 100;
-            const bottom = top + section.offsetHeight;
-            const id = section.getAttribute('id');
-            const navLink = document.querySelector(`.nav-item[href="#${id}"]`);
-            if (navLink) {
-                if (scrolled >= top && scrolled < bottom) {
-                    document.querySelectorAll('.nav-item').forEach(li => li.classList.remove('active'));
-                    navLink.classList.add('active');
-                }
-            }
-        });
-    });
-
-    /* 9. Contact Form AJAX (Formspree) */
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalHTML = submitBtn.innerHTML;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
             
-            submitBtn.innerHTML = '<span>Sending...</span> <i class="ph ph-circle-notch animate-spin"></i>';
-            submitBtn.disabled = true;
-
-            const response = await fetch(contactForm.action, {
-                method: 'POST',
-                body: new FormData(contactForm),
-                headers: { 'Accept': 'application/json' }
-            });
-
-            if (response.ok) {
-                submitBtn.innerHTML = '<span>Sent!</span> <i class="ph ph-check-circle"></i>';
-                contactForm.reset();
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalHTML;
-                    submitBtn.disabled = false;
-                }, 3000);
-            } else {
-                submitBtn.innerHTML = '<span>Failed!</span> <i class="ph ph-warning-circle"></i>';
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalHTML;
-                    submitBtn.disabled = false;
-                }, 3000);
-            }
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
         });
-    }
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+    });
 
-    /* 10. Modals */
-    const modalTriggers = document.querySelectorAll('[data-modal]');
-    modalTriggers.forEach(trigger => {
-        trigger.addEventListener('click', () => {
-            const target = document.getElementById(trigger.getAttribute('data-modal'));
-            if (target) target.classList.add('active');
+    /* 8. Magnetic Buttons */
+    const magneticBtns = document.querySelectorAll('.magnetic');
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = `translate(0px, 0px)`;
+        });
+    });
+
+    /* 9. Modal Logic */
+    const projectCards = document.querySelectorAll('.project-card');
+    const modals = document.querySelectorAll('.modal');
+    const closeBtns = document.querySelectorAll('.close-modal');
+
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const modalId = card.getAttribute('data-modal');
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
     });
 
-    document.querySelectorAll('.modal-close, .modal').forEach(el => {
-        el.addEventListener('click', (e) => {
-            if (e.target === el || el.classList.contains('modal-close')) {
-                document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-                document.body.style.overflow = 'auto';
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const modal = btn.closest('.modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            e.target.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    /* 10. Sticky Navbar Blur & Active Link */
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+        // Sticky effect
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        // Active link tracking
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
             }
         });
     });
 
-    /* 11. Particle Canvas Starfield */
-    const cvs = document.getElementById('particle-canvas');
-    if (cvs) {
-        const ctx = cvs.getContext('2d');
-        let pts = [];
-        const init = () => {
-            cvs.width = window.innerWidth; cvs.height = window.innerHeight;
-            pts = Array.from({length: 80}, () => ({
-                x: Math.random() * cvs.width,
-                y: Math.random() * cvs.height,
-                s: Math.random() * 2 + 1,
-                v: Math.random() * 0.5 + 0.1
-            }));
-        };
-        const draw = () => {
-            ctx.clearRect(0,0,cvs.width,cvs.height);
-            ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--primary');
-            pts.forEach(p => {
-                p.y -= p.v; if(p.y < 0) p.y = cvs.height;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
+    /* 11. Mobile Menu Toggle */
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('ph-list');
+            icon.classList.toggle('ph-x');
+        });
+
+        // Close menu on link click
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('open');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('ph-list');
+                icon.classList.remove('ph-x');
             });
-            requestAnimationFrame(draw);
-        };
-        init(); draw();
-        window.addEventListener('resize', init);
+        });
     }
+
+    /* 12. Parallax Effect */
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallaxBg = document.querySelector('.bg-gradient-container');
+        if (parallaxBg) {
+            parallaxBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+        }
+    });
+
+    /* 13. Contact Form Handling */
+       /* 13. Contact Form Handling (Integrated with Formspree) */
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            // Show Loading State
+            btn.innerHTML = '<span>Sending...</span> <i class="ph ph-circle-notch animate-spin"></i>';
+            btn.style.pointerEvents = 'none';
+
+            const formData = new FormData(contactForm);
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Success State
+                    btn.innerHTML = '<span>Message Sent!</span> <i class="ph ph-check-circle"></i>';
+                    btn.classList.add('success');
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.classList.remove('success');
+                        btn.style.pointerEvents = 'all';
+                    }, 3000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                // Error State
+                btn.innerHTML = '<span>Error! Try again.</span> <i class="ph ph-warning-circle"></i>';
+                btn.style.background = '#ef4444';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.style.pointerEvents = 'all';
+                }, 3000);
+            }
+        });
+    }
+
 });
